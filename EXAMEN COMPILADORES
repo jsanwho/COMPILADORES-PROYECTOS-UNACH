@@ -1,0 +1,101 @@
+import tkinter as tk
+import ply.lex as lex
+
+# Aqui definimos los tokens en los que meteremos las palabras que debe detectar
+tokens = [
+    'RESERVADO',
+    'IDENTIFICADOR',
+    'DELIMITADOR',
+    'OPERADOR',
+    'NUMERO',
+    'PUNTO',
+]
+
+# Aqui estan las pautas que debe seguir el analizador lexico
+t_RESERVADO = r'(public|static|void|main|int|read|end|printf)'
+t_IDENTIFICADOR = r'[a-zA-Z_][a-zA-Z0-9_]*'
+t_DELIMITADOR = r'[(){};,"]'
+t_OPERADOR = r'[=+]'
+t_NUMERO = r'\d+|\d+\.\d+'
+t_PUNTO = r'\.'
+
+# Con esto ignora los espacios en blaco
+t_ignore = ' \t'
+
+# Aqui inicia el Analizador Lexico
+lexer = lex.lex()
+
+# Esta es la funcion analizar
+def analizar(entrada):
+    lexer.input(entrada)
+    tokens = []
+
+    # Usando un while, se hace un ciclo que revisa uno por uno cada cadena, identificandola de que tipo es.
+    while True:
+        token = lexer.token()
+        if not token:
+            break
+
+        tokens.append((token.type, token.value))
+
+    return tokens
+
+# Función para contar y mostrar los tokens en la interfaz gráfica
+def contar_y_mostrar(tokens_totales):
+    conteo = {
+        'RESERVADO': 0,
+        'IDENTIFICADOR': 0,
+        'DELIMITADOR': 0,
+        'OPERADOR': 0,
+        'NUMERO': 0,
+        'PUNTO': 0,
+        'NO VALIDO': 0
+    }
+
+    for token_type, _ in tokens_totales:
+        if token_type in conteo:
+            conteo[token_type] += 1
+        else:
+            conteo['NO VALIDO'] += 1
+
+    for tipo, cantidad in conteo.items():
+        resultado_texto.insert(tk.END, f"{tipo}: {cantidad}\n")
+
+# Esta función se ejecuta cuando se presiona el botón para analizar el código
+def analizar_codigo():
+    codigo = entrada_texto.get("1.0", tk.END)
+    lineas = codigo.split("\n")
+    tokens_totales = []
+
+    for i, linea in enumerate(lineas):
+        tokens_linea = analizar(linea)
+        tokens_totales.extend(tokens_linea)
+
+    resultado_texto.delete("1.0", tk.END)
+
+    # Mostrar cada token encontrado
+    for token_type, value in tokens_totales:
+        resultado_texto.insert(tk.END, f"{token_type}: {value}\n")
+
+    resultado_texto.insert(tk.END, "\n")
+
+    # Contar y mostrar los tokens por tipo
+    contar_y_mostrar(tokens_totales)
+
+ventana = tk.Tk()
+ventana.geometry("500x580")
+ventana.title("Práctica de Analizador Léxico con librería Ply.Lex as Lex")
+ventana.config(bg="#12657f")
+
+entrada_texto = tk.Text(ventana, font=("Arial", 12), bg="white", height=10, width=40)
+entrada_texto.place(x=60, y=10)
+
+resultado_texto = tk.Text(ventana, font=("Arial", 12), bg="white", height=15, width=40)
+resultado_texto.place(x=60, y=220)
+
+boton_analizar = tk.Button(ventana, text="Analizar", font=("Arial", 12), bg="#121b29", fg="white", command=analizar_codigo)
+boton_analizar.place(x=150, y=530)
+boton_borrar = tk.Button(ventana, text="Borrar", font=("Arial", 12), bg="#121b29", fg="white", command=lambda: entrada_texto.delete("1.0", tk.END))
+boton_borrar.place(x=280, y=530)
+
+ventana.mainloop()
