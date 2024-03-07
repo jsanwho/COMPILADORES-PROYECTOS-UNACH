@@ -1,0 +1,72 @@
+/*Styles.css*/
+
+body,
+html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+    font-family: 'Arial', sans-serif;
+}
+
+h1 {
+
+    color: #333;
+
+}
+
+textarea {
+    width: 90%;
+    height: 100px;
+    margin: 10px 0;
+    padding: 0 5px;
+    border: 1px solid #ccc;
+    font-family: 'Monospace';
+    font-size: 16px;
+    resize: none;
+    overflow: hidden;
+}
+
+button {
+    width: 90%;
+    max-width: 200px;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+}
+
+button:hover {
+    background-color: #0056b3;
+
+}
+
+#resultContainer {
+    width: 90%;
+    max-width: 500px;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+#resultContainer ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#resultContainer li {
+    margin-bottom: 10px;
+    font-family: 'Monospace';
+}

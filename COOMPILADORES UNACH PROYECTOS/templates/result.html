@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resultados del Análisis</title>
+</head>
+<body>
+    <h1>Resultados del Análisis</h1>
+    
+    <h2>Análisis Léxico:</h2>
+    <ul>
+        {% for resultado in resultados_lexico %}
+            <li>{{ resultado }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Análisis Sintáctico:</h2>
+    <ul>
+        {% for resultado in resultados_sintactico %}
+            <li>{{ resultado }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
